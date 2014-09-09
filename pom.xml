@@ -32,7 +32,7 @@
 		<ojdbc.version>11.2.0.2.0</ojdbc.version>
 		<org.hibernate.version>4.1.8.Final</org.hibernate.version>
 		<jasper.version>4.8.0</jasper.version>
-		<jsf.version>2.2.5</jsf.version>
+		<jsf.version>2.2.8</jsf.version>
 		<primefaces.version>4.0</primefaces.version>
 	</properties>
 
