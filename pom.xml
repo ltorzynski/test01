@@ -29,7 +29,6 @@
 		<cxf.version>2.7.5</cxf.version>
 		<aspectj.version>1.8.0.M1</aspectj.version>
 		<genrap.version>1.0-SIGN</genrap.version>
-		<ojdbc.version>11.2.0.2.0</ojdbc.version>
 		<org.hibernate.version>4.2.15.Final</org.hibernate.version>
 		<jasper.version>4.8.0</jasper.version>
 		<jsf.version>2.2.9</jsf.version>
