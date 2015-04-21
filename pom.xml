@@ -4,12 +4,12 @@
 	<groupId>com.comarch.fsm</groupId>
 	<artifactId>master-config</artifactId>
 	<packaging>pom</packaging>
-	<version>1.11</version>
+	<version>1.12-SNAPSHOT</version>
 	<name>FSM - Master configuration - POM</name>
 
 	<scm>
-		<connection>scm:svn:svn://gucio/mwm-framework/trunk/fsm-master-config/tags/v1.11</connection>
-		<developerConnection>scm:svn:svn://gucio.lodz2.comarch/mwm-framework/trunk/fsm-master-config/tags/v1.11</developerConnection>
+		<connection>scm:svn:svn://gucio/mwm-framework/trunk/fsm-master-config/trunk</connection>
+		<developerConnection>scm:svn:svn://gucio.lodz2.comarch/mwm-framework/trunk/fsm-master-config/trunk</developerConnection>
 	</scm>
 	<!-- mvn -B release:clean release:prepare relase:perform -->
 	<properties>
