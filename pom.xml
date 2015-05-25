@@ -32,7 +32,7 @@
 		<org.hibernate.version>4.2.15.Final</org.hibernate.version>
 		<jasper.version>4.8.0</jasper.version>
 		<jsf.version>2.2.9</jsf.version>
-		<primefaces.version>4.0</primefaces.version>
+		<primefaces.version>5.2</primefaces.version>
 	</properties>
 
 	<distributionManagement>
