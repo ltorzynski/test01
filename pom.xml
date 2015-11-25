@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.comarch.fsm</groupId>
@@ -34,6 +35,24 @@
 		<jsf.version>2.2.9</jsf.version>
 		<primefaces.version>5.2</primefaces.version>
 	</properties>
+
+	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<sonar.host.url>http://gucio.lodz2.comarch:8889</sonar.host.url>
+				<sonar.jdbc.url>jdbc:oracle:thin:@gucio.lodz2.comarch:1521:snr</sonar.jdbc.url>
+				<sonar.jdbc.username>snr</sonar.jdbc.username>
+				<sonar.jdbc.password>snr</sonar.jdbc.password>
+				<sonar.jdbc.driver>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driver>
+				<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+				<sonar.scm.disabled>true</sonar.scm.disabled>
+				<sonar.scm.provider>svn</sonar.scm.provider>
+			</properties>
+		</profile>
+	</profiles>
 
 	<distributionManagement>
 		<repository>
@@ -82,6 +101,12 @@
 						<tagNameFormat>v@{project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
+				
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>2.7.1</version>
+				</plugin>
 
 			</plugins>
 		</pluginManagement>
@@ -105,6 +130,27 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.1</version>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.4.201502262128</version>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
