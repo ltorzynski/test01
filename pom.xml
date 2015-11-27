@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.comarch.fsm</groupId>
@@ -33,23 +34,112 @@
 		<jasper.version>4.8.0</jasper.version>
 		<jsf.version>2.2.9</jsf.version>
 		<primefaces.version>5.2</primefaces.version>
+
+		<sonar.host.url>http://gucio.lodz2.comarch:8889</sonar.host.url>
+		<sonar.jdbc.url>jdbc:oracle:thin:@gucio.lodz2.comarch:1521:snr</sonar.jdbc.url>
+		<sonar.jdbc.username>snr</sonar.jdbc.username>
+		<sonar.jdbc.password>snr</sonar.jdbc.password>
+		<sonar.jdbc.driver>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driver>
+		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+		<sonar.scm.disabled>true</sonar.scm.disabled>
+		<sonar.scm.provider>svn</sonar.scm.provider>
+		<sonar.scm-stats.enabled>true</sonar.scm-stats.enabled>
+		<!-- <jacoco.outputDir>${session.executionRootDirectory}/target/</jacoco.outputDir> -->
+
+		<jacoco.outputDir>${project.build.directory}</jacoco.outputDir>
+		<!-- Jacoco output file for UTs -->
+		<jacoco.out.ut.file>jacoco-ut.exec</jacoco.out.ut.file>
+		<!-- Tells Sonar where the Jacoco coverage result file is located for Unit Tests -->
+		<sonar.jacoco.reportPath>${jacoco.outputDir}/${jacoco.out.ut.file}</sonar.jacoco.reportPath>
+		<!-- Jacoco output file for ITs -->
+		<jacoco.out.it.file>jacoco-it.exec</jacoco.out.it.file>
+		<!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
+		<sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
+
 	</properties>
 
 	<profiles>
+
 		<profile>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<sonar.host.url>http://gucio.lodz2.comarch:8889</sonar.host.url>
-				<sonar.jdbc.url>jdbc:oracle:thin:@gucio.lodz2.comarch:1521:snr</sonar.jdbc.url>
-				<sonar.jdbc.username>snr</sonar.jdbc.username>
-				<sonar.jdbc.password>snr</sonar.jdbc.password>
-				<sonar.jdbc.driver>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driver>
-				<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
-				<sonar.scm.disabled>true</sonar.scm.disabled>
-				<sonar.scm.provider>svn</sonar.scm.provider>
-			</properties>
+			<id>coverage</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<argLine>-Duser.timezone=UTC ${jacoco.agent.ut.arg}</argLine>
+							<!-- Specific to generate mapping between tests and covered code -->
+							<!-- <properties>
+								<property>
+									<name>listener</name>
+									<value>org.sonar.java.jacoco.JUnitListener</value>
+								</property>
+							</properties> -->
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<argLine>-Xmx1024m -Duser.timezone=UTC ${jacoco.agent.it.arg}</argLine>
+							<!-- Specific to generate mapping between tests and covered code -->
+							<!-- <properties>
+								<property>
+									<name>listener</name>
+									<value>org.sonar.java.jacoco.JUnitListener</value>
+								</property>
+							</properties> -->
+							<!-- Let's put failsafe reports with surefire to have access to tests failures/success reports in sonar -->
+							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.4.201502262128</version>
+						<executions>
+							<!-- Prepares a variable, jacoco.agent.ut.arg, that contains the info to be passed to the JVM hosting the code being 
+								tested. -->
+							<execution>
+								<id>prepare-ut-agent</id>
+								<phase>process-test-classes</phase>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+								<configuration>
+									<destFile>${sonar.jacoco.reportPath}</destFile>
+									<propertyName>jacoco.agent.ut.arg</propertyName>
+									<append>true</append>
+								</configuration>
+							</execution>
+							<!-- Prepares a variable, jacoco.agent.it.arg, that contains the info to be passed to the JVM hosting the code being 
+								tested. -->
+							<execution>
+								<id>prepare-it-agent</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+								<configuration>
+									<destFile>${sonar.jacoco.itReportPath}</destFile>
+									<propertyName>jacoco.agent.it.arg</propertyName>
+									<append>true</append>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<!-- https://maven-repository.com/artifact/org.sonarsource.java/sonar-jacoco-listeners -->
+			<!-- <dependencies>
+				<dependency>
+					<groupId>org.codehaus.sonar-plugins.java</groupId>
+					<artifactId>sonar-jacoco-listeners</artifactId>
+					<version>3.2</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies> -->
 		</profile>
 	</profiles>
 
@@ -107,6 +197,36 @@
 					<version>2.7.1</version>
 				</plugin>
 
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.19</version>
+					<configuration>
+						<argLine>-Duser.timezone=UTC</argLine>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.19</version>
+					<configuration>
+						<argLine>-Xmx1024m -Duser.timezone=UTC</argLine>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<testFailureIgnore>true</testFailureIgnore>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -125,7 +245,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore />
+										<ignore></ignore>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
@@ -155,27 +275,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.1</version>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.4.201502262128</version>
-				<executions>
-					<execution>
-						<id>default-prepare-agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>default-report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
