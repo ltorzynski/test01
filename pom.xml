@@ -54,7 +54,7 @@
 		<jacoco.out.it.file>jacoco-it.exec</jacoco.out.it.file>
 		<!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
 		<sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
-
+		<sonar.exclusions>**/map/libs/*.js, **/primefaces/**, **/jquery.swfobject.js, **/jqueryPlugins/**</sonar.exclusions>
 	</properties>
 
 	<profiles>
@@ -69,26 +69,26 @@
 						<configuration>
 							<argLine>-Duser.timezone=UTC ${jacoco.agent.ut.arg}</argLine>
 							<!-- Specific to generate mapping between tests and covered code -->
-							<!-- <properties>
+							<properties>
 								<property>
 									<name>listener</name>
 									<value>org.sonar.java.jacoco.JUnitListener</value>
 								</property>
-							</properties> -->
+							</properties>
 						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<configuration>
-							<argLine>-Xmx1024m -Duser.timezone=UTC ${jacoco.agent.it.arg}</argLine>
+							<argLine>-Xmx1024m -XX:-UseSplitVerifier -Duser.timezone=UTC ${jacoco.agent.it.arg}</argLine>
 							<!-- Specific to generate mapping between tests and covered code -->
-							<!-- <properties>
+							<properties>
 								<property>
 									<name>listener</name>
 									<value>org.sonar.java.jacoco.JUnitListener</value>
 								</property>
-							</properties> -->
+							</properties>
 							<!-- Let's put failsafe reports with surefire to have access to tests failures/success reports in sonar -->
 							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 						</configuration>
@@ -139,6 +139,14 @@
 					<scope>test</scope>
 				</dependency>
 			</dependencies> -->
+			<dependencies>
+				<dependency>
+	  				<groupId>org.sonarsource.java</groupId>
+	  				<artifactId>sonar-jacoco-listeners</artifactId>
+	  				<version>3.7.1</version>
+	  				<scope>test</scope>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 
