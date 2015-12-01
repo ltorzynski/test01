@@ -54,7 +54,7 @@
 		<jacoco.out.it.file>jacoco-it.exec</jacoco.out.it.file>
 		<!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
 		<sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
-		<sonar.exclusions>**/map/libs/*.js, **/primefaces/**, **/jquery.swfobject.js, **/jqueryPlugins/**</sonar.exclusions>
+		<sonar.exclusions>**/map/libs/*.js, **/primefaces/**, **/jquery.swfobject.js, **/jqueryPlugins/**, **/app/date.js, **/jquery*.js, **/generated/**</sonar.exclusions>
 	</properties>
 
 	<profiles>
