@@ -40,7 +40,7 @@
 		<sonar.jdbc.password>snr</sonar.jdbc.password>
 		<sonar.jdbc.driver>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driver>
 		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
-		<sonar.scm.disabled>true</sonar.scm.disabled>
+		<sonar.scm.disabled>false</sonar.scm.disabled>
 		<sonar.scm.provider>svn</sonar.scm.provider>
 		<sonar.scm-stats.enabled>true</sonar.scm-stats.enabled>
 		<!-- <jacoco.outputDir>${session.executionRootDirectory}/target/</jacoco.outputDir> -->
