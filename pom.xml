@@ -42,7 +42,6 @@
 		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 		<sonar.scm.disabled>false</sonar.scm.disabled>
 		<sonar.scm.provider>svn</sonar.scm.provider>
-		<sonar.scm-stats.enabled>true</sonar.scm-stats.enabled>
 		<!-- <jacoco.outputDir>${session.executionRootDirectory}/target/</jacoco.outputDir> -->
 
 		<jacoco.outputDir>${project.build.directory}</jacoco.outputDir>
