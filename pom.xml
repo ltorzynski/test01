@@ -53,7 +53,7 @@
 		<jacoco.out.it.file>jacoco-it.exec</jacoco.out.it.file>
 		<!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
 		<sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
-		<sonar.exclusions>**/map/libs/*.js, **/primefaces/**, **/jquery.swfobject.js, **/jqueryPlugins/**, **/app/date.js, **/jquery*.js, **/generated/**</sonar.exclusions>
+		<sonar.exclusions>**/map/libs/*.js, **/primefaces/**, **/jquery.swfobject.js, **/jqueryPlugins/**, **/app/date.js,**/jquery*.js, **/generated/**</sonar.exclusions>
 	</properties>
 
 	<profiles>
@@ -68,12 +68,8 @@
 						<configuration>
 							<argLine>-Duser.timezone=UTC ${jacoco.agent.ut.arg}</argLine>
 							<!-- Specific to generate mapping between tests and covered code -->
-							<!-- <properties>
-								<property>
-									<name>listener</name>
-									<value>org.sonar.java.jacoco.JUnitListener</value>
-								</property>
-							</properties> -->
+							<!-- <properties> <property> <name>listener</name> <value>org.sonar.java.jacoco.JUnitListener</value> </property> 
+								</properties> -->
 						</configuration>
 					</plugin>
 					<plugin>
@@ -82,12 +78,8 @@
 						<configuration>
 							<argLine>-Xmx1024m -XX:-UseSplitVerifier -Duser.timezone=UTC ${jacoco.agent.it.arg}</argLine>
 							<!-- Specific to generate mapping between tests and covered code -->
-							<!-- <properties>
-								<property>
-									<name>listener</name>
-									<value>org.sonar.java.jacoco.JUnitListener</value>
-								</property>
-							</properties> -->
+							<!-- <properties> <property> <name>listener</name> <value>org.sonar.java.jacoco.JUnitListener</value> </property> 
+								</properties> -->
 							<!-- Let's put failsafe reports with surefire to have access to tests failures/success reports in sonar -->
 							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 						</configuration>
@@ -149,6 +141,7 @@
 	</distributionManagement>
 
 	<build>
+		
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -201,7 +194,9 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.19</version>
 					<configuration>
-						<argLine>-Duser.timezone=UTC</argLine>
+						<forkCount>4</forkCount>
+						<reuseForks>true</reuseForks>
+						<argLine>-Xmx1024m -Duser.timezone=UTC</argLine>
 					</configuration>
 				</plugin>
 
@@ -258,7 +253,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.5.1</version>
 				<configuration>
 					<source>${compilerVersion}</source>
 					<target>${compilerVersion}</target>
@@ -273,6 +268,27 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.3.3</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
