@@ -22,17 +22,19 @@
 		<compilerVersion>1.8</compilerVersion>
 
 		<!--dependency versions -->
-		<org.springframework.version>4.0.3.RELEASE</org.springframework.version>
+		<org.springframework.version>4.2.5.RELEASE</org.springframework.version>
 		<org.springframework.security-version>3.2.3.RELEASE</org.springframework.security-version>
 		<org.springframework.webflow.version>2.4.1.RELEASE</org.springframework.webflow.version>
 		<org.slf4j.version>1.7.2</org.slf4j.version>
-		<cxf.version>2.7.5</cxf.version>
+		<cxf.version>3.1.5</cxf.version>
+		<cxf-api.version>2.7.5</cxf-api.version>
 		<aspectj.version>1.8.0.M1</aspectj.version>
 		<genrap.version>1.2-SIGN</genrap.version>
 		<org.hibernate.version>4.2.15.Final</org.hibernate.version>
 		<jasper.version>4.8.0</jasper.version>
 		<jsf.version>2.2.9</jsf.version>
 		<primefaces.version>5.2</primefaces.version>
+		<com.fasterxml.jackson.core-version>2.6.5</com.fasterxml.jackson.core-version>
 
 		<sonar.host.url>http://gucio.lodz2.comarch:8889</sonar.host.url>
 		<sonar.jdbc.url>jdbc:oracle:thin:@gucio.lodz2.comarch:1521:snr</sonar.jdbc.url>
