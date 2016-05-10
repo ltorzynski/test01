@@ -22,12 +22,11 @@
 		<compilerVersion>1.8</compilerVersion>
 
 		<!--dependency versions -->
-		<org.springframework.version>4.2.5.RELEASE</org.springframework.version>
+		<org.springframework.version>4.2.6.RELEASE</org.springframework.version>
 		<org.springframework.security-version>3.2.3.RELEASE</org.springframework.security-version>
-		<org.springframework.webflow.version>2.4.1.RELEASE</org.springframework.webflow.version>
+		<org.springframework.webflow.version>2.4.2.RELEASE</org.springframework.webflow.version>
 		<org.slf4j.version>1.7.2</org.slf4j.version>
-		<cxf.version>3.1.5</cxf.version>
-		<cxf-api.version>2.7.5</cxf-api.version>
+		<cxf.version>3.1.6</cxf.version>
 		<aspectj.version>1.8.0.M1</aspectj.version>
 		<genrap.version>1.2-SIGN</genrap.version>
 		<org.hibernate.version>4.2.15.Final</org.hibernate.version>
